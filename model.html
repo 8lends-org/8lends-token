@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8LENDS Contracts</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        
+        .contracts {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 20px;
+            overflow-x: auto;
+        }
+        
+        .contract {
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            background: #fafafa;
+            min-width: 280px;
+            flex-shrink: 0;
+        }
+        
+        .contract h3 {
+            margin-top: 0;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+        }
+        
+        .purpose {
+            font-style: italic;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .methods {
+            margin-top: 10px;
+        }
+        
+        .method-group {
+            margin-bottom: 10px;
+        }
+        
+        .method-group-title {
+            font-weight: bold;
+            color: #34495e;
+            margin-bottom: 5px;
+        }
+        
+        .method {
+            background: #ecf0f1;
+            padding: 5px 8px;
+            margin: 2px 0;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .method-name {
+            font-weight: bold;
+        }
+        
+        .method-description {
+            font-family: Arial, sans-serif;
+            font-size: 11px;
+            color: #666;
+            font-style: italic;
+        }
+        
+        .owner { border-left: 4px solid #e74c3c; }
+        .manager { border-left: 4px solid #f39c12; }
+        .reward-system { border-left: 4px solid #9b59b6; }
+        .fundraise { border-left: 4px solid #27ae60; }
+        .public { border-left: 4px solid #95a5a6; }
+        .investor { border-left: 4px solid #3498db; }
+        .borrower { border-left: 4px solid #e67e22; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>8LENDS Contracts Architecture</h1>
+        
+        <div class="contracts">
+            <div class="contract">
+                <h3>ManagerRegistry</h3>
+                <div class="purpose">Access Control Hub</div>
+                <div class="methods">
+                    <div class="method-group">
+                        <div class="method-group-title">Owner Methods:</div>
+                        <div class="method owner"><span class="method-name">initialize</span><span class="method-description">Contract initialization</span></div>
+                        <div class="method owner"><span class="method-name">setPoolStatus</span><span class="method-description">Set pool status</span></div>
+                        <div class="method owner"><span class="method-name">setContractAddresses</span><span class="method-description">Set contract addresses</span></div>
+                        <div class="method owner"><span class="method-name">_authorizeUpgrade</span><span class="method-description">Authorize upgrade</span></div>
+                    </div>
+                    <div class="method-group">
+                        <div class="method-group-title">Manager Methods:</div>
+                        <div class="method manager"><span class="method-name">setManagerStatus</span><span class="method-description">Set manager status</span></div>
+                        <div class="method manager"><span class="method-name">setManagerStatusBatch</span><span class="method-description">Batch set manager statuses</span></div>
+                    </div>
+                    <div class="method-group">
+                        <div class="method-group-title">Public Methods:</div>
+                        <div class="method public"><span class="method-name">isManager</span><span class="method-description">Check if manager</span></div>
+                        <div class="method public"><span class="method-name">isPool</span><span class="method-description">Check if pool</span></div>
+                        <div class="method public"><span class="method-name">isFundraise</span><span class="method-description">Check if fundraise</span></div>
+                        <div class="method public"><span class="method-name">isTreasury</span><span class="method-description">Check if treasury</span></div>
+                        <div class="method public"><span class="method-name">isRewardSystem</span><span class="method-description">Check if reward system</span></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="contract">
+                <h3>Token</h3>
+                <div class="purpose">ERC20 Token</div>
+                <div class="methods">
+                    <div class="method-group">
+                        <div class="method-group-title">Owner Methods:</div>
+                        <div class="method owner"><span class="method-name">enableBuying</span><span class="method-description">Enable buying</span></div>
+                        <div class="method owner"><span class="method-name">disableBuying</span><span class="method-description">Disable buying</span></div>
+                        <div class="method owner"><span class="method-name">enableBuyingForever</span><span class="method-description">Enable buying forever</span></div>
+                        <div class="method owner"><span class="method-name">disableMintingForever</span><span class="method-description">Disable minting forever</span></div>
+                        <div class="method owner"><span class="method-name">mint</span><span class="method-description">Mint tokens</span></div>
+                        <div class="method owner"><span class="method-name">setManagerRegistry</span><span class="method-description">Set manager registry</span></div>
+                    </div>
+                    <div class="method-group">
+                        <div class="method-group-title">Reward System Methods:</div>
+                        <div class="method reward-system"><span class="method-name">mintReward</span><span class="method-description">Mint reward tokens</span></div>
+                    </div>
+                    <div class="method-group">
+                        <div class="method-group-title">Public Methods:</div>
+                        <div class="method public"><span class="method-name">burn</span><span class="method-description">Burn tokens</span></div>
+                        <div class="method public"><span class="method-name">transfer</span><span class="method-description">Transfer tokens</span></div>
+                        <div class="method public"><span class="method-name">transferFrom</span><span class="method-description">Transfer from</span></div>
+                        <div class="method public"><span class="method-name">canBuy</span><span class="method-description">Check if can buy</span></div>
+                    </div>
+        </div>
+    </div>
+
+            <div class="contract">
+                <h3>Treasury</h3>
+                <div class="purpose">Token Storage</div>
+                <div class="methods">
+                    <div class="method-group">
+                        <div class="method-group-title">Owner Methods:</div>
+                        <div class="method owner"><span class="method-name">withdraw</span><span class="method-description">Withdraw tokens</span></div>
+                        <div class="method owner"><span class="method-name">_authorizeUpgrade</span><span class="method-description">Authorize upgrade</span></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="contract">
+                <h3>RewardSystem</h3>
+                <div class="purpose">Referral & Vesting</div>
+                <div class="methods">
+                    <div class="method-group">
+                        <div class="method-group-title">Owner Methods:</div>
+                        <div class="method owner"><span class="method-name">updateContracts</span><span class="method-description">Update contracts</span></div>
+                        <div class="method owner"><span class="method-name">updateUSDCAddress</span><span class="method-description">Update USDC address</span></div>
+                        <div class="method owner"><span class="method-name">updateTokenAddress</span><span class="method-description">Update token address</span></div>
+                        <div class="method owner"><span class="method-name">updateUniswapRouterAddress</span><span class="method-description">Update Uniswap router address</span></div>
+                        <div class="method owner"><span class="method-name">updateTreasuryAddress</span><span class="method-description">Update treasury address</span></div>
+                        <div class="method owner"><span class="method-name">withdraw</span><span class="method-description">Withdraw tokens</span></div>
+                        <div class="method owner"><span class="method-name">_authorizeUpgrade</span><span class="method-description">Authorize upgrade</span></div>
+                    </div>
+                    <div class="method-group">
+                        <div class="method-group-title">Manager Methods:</div>
+                        <div class="method manager"><span class="method-name">setParameters</span><span class="method-description">Set parameters</span></div>
+                        <div class="method manager"><span class="method-name">sendUSDCForProjectToUser</span><span class="method-description">Send USDC to user</span></div>
+                        <div class="method manager"><span class="method-name">sendTokensForProjectToUser</span><span class="method-description">Send tokens to user</span></div>
+                    </div>
+                    <div class="method-group">
+                        <div class="method-group-title">Fundraise Methods:</div>
+                        <div class="method fundraise"><span class="method-name">recordInvestment</span><span class="method-description">Record investment</span></div>
+                        <div class="method fundraise"><span class="method-name">activateProjectRewards</span><span class="method-description">Activate project rewards</span></div>
+                    </div>
+                    <div class="method-group">
+                        <div class="method-group-title">Investor Methods:</div>
+                        <div class="method investor"><span class="method-name">claimUSDCForProject</span><span class="method-description">Claim USDC</span></div>
+                        <div class="method investor"><span class="method-name">claimTokensForProject</span><span class="method-description">Claim tokens (vesting)</span></div>
+                    </div>
+                    <div class="method-group">
+                        <div class="method-group-title">Inviter Methods:</div>
+                        <div class="method investor"><span class="method-name">claimUSDCForProject</span><span class="method-description">Claim USDC</span></div>
+                    </div>
+                    <div class="method-group">
+                        <div class="method-group-title">Public Methods:</div>
+                        <div class="method public"><span class="method-name">getUserInfo</span><span class="method-description">Get user info</span></div>
+                        <div class="method public"><span class="method-name">getInviterStats</span><span class="method-description">Get inviter stats</span></div>
+                        <div class="method public"><span class="method-name">getVestingInfoForProject</span><span class="method-description">Get vesting info</span></div>
+                        <div class="method public"><span class="method-name">getProjectRewards</span><span class="method-description">Get project rewards</span></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="contract">
+                <h3>Fundraise</h3>
+                <div class="purpose">Investment Platform</div>
+                <div class="methods">
+                    <div class="method-group">
+                        <div class="method-group-title">Owner Methods:</div>
+                        <div class="method owner"><span class="method-name">_authorizeUpgrade</span><span class="method-description">Authorize upgrade</span></div>
+                    </div>
+                    <div class="method-group">
+                        <div class="method-group-title">Manager Methods:</div>
+                        <div class="method manager"><span class="method-name">createProject</span><span class="method-description">Create project</span></div>
+                        <div class="method manager"><span class="method-name">moveProjectStage</span><span class="method-description">Move project stage</span></div>
+                        <div class="method manager"><span class="method-name">setProject</span><span class="method-description">Set project</span></div>
+                        <div class="method manager"><span class="method-name">setWhitelist</span><span class="method-description">Set whitelist</span></div>
+                        <div class="method manager"><span class="method-name">setTrustedSigner</span><span class="method-description">Set trusted signer</span></div>
+                        <div class="method manager"><span class="method-name">cancelProject</span><span class="method-description">Cancel project</span></div>
+                        <div class="method manager"><span class="method-name">transferFundsToBorrower</span><span class="method-description">Transfer funds to borrower</span></div>
+                        <div class="method manager"><span class="method-name">withdrawInvestment</span><span class="method-description">Withdraw investment</span></div>
+                        <div class="method manager"><span class="method-name">claim</span><span class="method-description">Claim funds</span></div>
+                    </div>
+                    <div class="method-group">
+                        <div class="method-group-title">Investor Methods:</div>
+                        <div class="method investor"><span class="method-name">invest</span><span class="method-description">Invest</span></div>
+                        <div class="method investor"><span class="method-name">investUpdate</span><span class="method-description">Invest with update</span></div>
+                        <div class="method investor"><span class="method-name">withdrawInvestment</span><span class="method-description">Withdraw investment</span></div>
+                        <div class="method investor"><span class="method-name">claim</span><span class="method-description">Claim funds</span></div>
+                    </div>
+                    <div class="method-group">
+                        <div class="method-group-title">Borrower Methods:</div>
+                        <div class="method borrower"><span class="method-name">transferFundsToBorrower</span><span class="method-description">Transfer funds to borrower</span></div>
+                        <div class="method borrower"><span class="method-name">makeRepayment</span><span class="method-description">Make repayment</span></div>
+                    </div>
+                    <div class="method-group">
+                        <div class="method-group-title">Public Methods:</div>
+                        <div class="method public"><span class="method-name">availableToClaim</span><span class="method-description">Available to claim</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
