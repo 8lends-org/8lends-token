@@ -37,13 +37,15 @@ async function main() {
     }
   };
 
+  const onlyOne = process.env.CONTRACT;
+
   const results = [];
   const contractsToVerify = [
     { name: "Token", address: config.token, args: [] },
-    // ...Object.entries(config)
-    //   .filter(([k, v]) => k.endsWith("_impl") && v)
-    //   .map(([k, v]) => ({ name: k.replace("_impl", ""), address: v as string, args: [] })),
-  ];
+    ...Object.entries(config)
+      .filter(([k, v]) => k.endsWith("_impl") && v)
+      .map(([k, v]) => ({ name: k.replace("_impl", ""), address: v as string, args: [] })),
+  ].filter(c => onlyOne ? c.name === onlyOne : true);
 
   for (const contract of contractsToVerify) {
     console.log(`\n\nVerifying ${contract.name} at ${contract.address}\n`);
